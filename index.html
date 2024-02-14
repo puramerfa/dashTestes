@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute Comando</title>
+</head>
+<body>
+    <h1>Execute Comando</h1>
+    <input type="text" id="comandoInput" placeholder="Insira o comando aqui">
+    <button onclick="executarComando()">Executar</button>
+
+    <script>
+        function executarComando() {
+            const comando = document.getElementById('comandoInput').value;
+
+            fetch(`/executar-comando?comando=${encodeURIComponent(comando)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao executar o comando');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log('Resposta do servidor:', data);
+                    alert('Comando executado com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro ao executar o comando:', error);
+                    alert('Erro ao executar o comando!');
+                });
+        }
+    </script>
+</body>
+</html>
